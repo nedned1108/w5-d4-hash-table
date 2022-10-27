@@ -59,18 +59,51 @@ class HashTable { // get O(1), set O(1), deleteKey O(1)
 
   read(key) {
     // Your code here
+    const index = this.hashMod(key);
+    let current = this.data[index];
+    while (current) {
+    if (current.key === key) {
+      return current.value
+    }
+    current = current.next
   }
-
+  return undefined;
+}
 
   resize() {
     // Your code here
-  }
+    let current = this.data;
+    this.capacity = this.capacity * 2;
+    
+    this.count = 0;
+    this.data = new Array(this.capacity).fill(null)
+    
+    for (let i = 0; i < current.length; i ++) {
+      let currentKey = current[i];
 
+      while (currentKey) {
+        this.insert(currentKey.key, currentKey.value);
+        currentKey = currentKey.next;
+      }
+    }
+  }
+  
 
   delete(key) {
     // Your code here
+    if (!this.read(key)) {
+      return "Key not found";
+    } else {
+      let current = this.read(key);
+      
+    }
   }
 }
 
 
 module.exports = HashTable;
+  
+
+
+
+
